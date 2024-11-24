@@ -1,0 +1,28 @@
+
+.ip-info-box {
+    margin-top: 20px;
+    padding: 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    width: 300px;
+    align-content: center;
+    align-self: center;
+  }
+  
+  .ip-info-box h3 {
+    margin-top: 0;
+    color: #333;
+  }
+  
+  .ip-info-box p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  #map {
+    width: 100%;
+    height: 500px; /* Asegúrate de tener una altura adecuada */
+  }
+  

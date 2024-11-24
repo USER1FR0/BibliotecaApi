@@ -1,0 +1,46 @@
+<div class="search-books">
+    <div class="search-header">
+        <h2 class="title">Buscar Libros</h2>
+        <input 
+            type="text" 
+            placeholder="Buscar libros..." 
+            [(ngModel)]="searchTerm">
+        <button class="search-button" (click)="searchBooks()">Buscar</button>
+    </div>
+
+    <div *ngIf="books.length > 0" class="results-container">
+        <h2>Resultados de la búsqueda</h2>
+        <div class="results">
+            <div *ngFor="let book of books" class="book">
+                <img [src]="book.volumeInfo.imageLinks?.thumbnail" alt="Portada del libro" class="book-cover">
+                <h3>{{ book.volumeInfo.title }}</h3>
+                <p><strong>Autor:</strong> {{ book.volumeInfo.authors?.join(', ') }}</p>
+                <p><strong>Fecha de publicación:</strong> {{ book.volumeInfo.publishedDate }}</p>
+                <!-- Botón para abrir el modal -->
+                <button class="btn btn-primary" (click)="openModal(book)">Ver más detalles</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Bootstrap -->
+<div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="bookModalLabel">{{ selectedBook?.volumeInfo.title }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img [src]="selectedBook?.volumeInfo.imageLinks?.thumbnail" alt="Portada del libro" class="book-cover">
+          <p><strong>Autor(es):</strong> {{ selectedBook?.volumeInfo.authors?.join(', ') }}</p>
+          <p><strong>Fecha de publicación:</strong> {{ selectedBook?.volumeInfo.publishedDate }}</p>
+          <p><strong>Descripción:</strong> {{ selectedBook?.volumeInfo.description }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

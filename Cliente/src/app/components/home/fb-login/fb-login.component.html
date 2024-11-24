@@ -1,0 +1,10 @@
+<div *ngIf="userName && userProfilePic; else loginButton">
+  <img [src]="userProfilePic" alt="User Profile Picture" width="50" height="50" style="border-radius: 50%;" />
+  <span> {{ userName }}</span>
+</div>
+
+<ng-template #loginButton>
+  <button (click)="fbLogin()">Inicia Sesión con Facebook</button>
+</ng-template>
+
+

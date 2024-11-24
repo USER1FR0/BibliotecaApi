@@ -1,0 +1,169 @@
+body {
+  font-family: 'Aptos', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Aseguramos que el contenido se ajuste a la altura de la pantalla */
+  overflow-x: hidden; /* Evitamos scroll horizontal */
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #0056b3;
+  color: white;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  height: 50px;
+}
+
+.content-section {
+  margin-top: 70px; /* Ajustamos el margen superior para evitar que el contenido quede debajo del navbar */
+}
+
+.header {
+  text-align: center;
+  background-image: url('https://png.pngtree.com/background/20230527/original/pngtree-black-living-room-with-modern-library-and-bookshelf-space-picture-image_2755507.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh; /* Ajustamos la altura de la cabecera */
+}
+
+.overlay {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.95), rgba(240, 240, 240, 0.95));
+  padding: 20px;
+  border-radius: 20px;
+  color: #363535;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  text-align: center;
+}
+
+.fancy-paragraph {
+  color: green;
+  font-size: 1.2em;
+  background-color: rgba(240, 240, 240, 0.9);
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+#map {
+  width: 300px;
+  height: 100%; /* Altura del mapa */
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.ip-info-box {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  text-align: center;
+}
+
+.news.length{
+  color:#2B6ADF
+
+}
+.news-article {
+  border: 1px solid #e0e0e0;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 10px;
+  background: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.news-article:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.news-article h3 {
+  margin: 0 0 10px;
+  font-size: 1.5em;
+  color: #333;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.news-article a {
+  display: inline-block; 
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  color: #fff; 
+  background-color: #007bff; 
+  border-radius: 5px; 
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease; 
+}
+
+.news-article a:hover {
+  background-color: #0056b3; 
+  transform: scale(1.05); 
+}
+
+.news-article p {
+  font-size: 1em;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
+}
+
+.main-news-title {
+  font-size: 2em;
+  font-weight: bold;
+  color: #2c3e50; 
+  text-align: center;
+  margin: 20px 0;
+  text-transform: uppercase; 
+  letter-spacing: 2px; 
+  position: relative;
+}
+
+.main-news-title::after {
+  content: ""; 
+  display: block;
+  width: 50px;
+  height: 4px;
+  background-color: #007bff; 
+  margin: 10px auto 0;
+  border-radius: 2px; 
+}
+
+
+
+.footer {
+  background-color: #ffffff;
+  padding: 10px 0;
+  text-align: center;
+  color: #2B6ADF;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}

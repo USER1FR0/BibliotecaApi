@@ -1,0 +1,50 @@
+<div class="container">
+  <h1>Pago de Multas Bibliotecarias</h1>
+
+  <!-- Seleccionar Número de Control -->
+  <div>
+    <label for="NumeroControl">Número de Control:</label>
+    <input type="text" id="NumeroControl" [(ngModel)]="numeroControlInput" (change)="loadMultasPendientes()" placeholder="Ingrese su número de control" required>
+  </div>
+
+  <!-- Lista de multas pendientes -->
+  <div *ngIf="multasPendientes.length > 0">
+    <h2>Multas Pendientes</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Monto</th>
+          <th>Fecha de Inicio</th>
+          <th>Id de Préstamo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let multa of multasPendientes">
+          <td>{{ multa.IdMulta }}</td>
+          <td>{{ multa.Monto | currency }}</td>
+          <td>{{ multa.FechaInicio | date:'short' }}</td>
+          <td>{{ multa.IdPrestamo }}</td>
+          <td>
+            <!-- Botón Pagar -->
+            <button class="pay-button" (click)="pagarMulta(multa)">Pagar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="multasPendientes.length === 0">
+    <p>No tienes multas pendientes.</p>
+  </div>
+
+  <!-- Contenedor de PayPal, visible solo si hay una multa seleccionada -->
+  <div *ngIf="multaSeleccionada">
+    <h2>Pago con PayPal</h2>
+    <p>Multa seleccionada: {{ multaSeleccionada.IdMulta }} - {{ multaSeleccionada.Monto | currency }}</p>
+    
+    <!-- Componente de PayPal -->
+    <app-paypal [multa]="multaSeleccionada"></app-paypal>
+  </div>
+</div>
