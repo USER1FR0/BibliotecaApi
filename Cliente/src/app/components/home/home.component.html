@@ -1,0 +1,52 @@
+<div class="navbar">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR8YrcFCPbj_x4P9KKtC7L4eH8NMNV8NDE2Q&s" alt="Logo UTNG" class="logo">
+  <div>
+    <div class="image-container">
+      <span class="spacer"></span>
+      <!-- Botón para el login del administrador -->
+      <button mat-icon-button (click)="openModal()" type="button">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <span class="spacer"></span>
+      <app-fb-login></app-fb-login>
+    </div>
+  </div>
+</div>
+
+
+<div class="content-section">
+  <div class="header">
+    <div class="overlay">
+      <p class="fancy-paragraph">Bienvenidos/as a la biblioteca UTNG</p>
+      <p>Al permitir el uso de su ubicación podremos mostrarles eventos cercanos a usted.</p>
+      <div class="ip-info-box">
+        <h3>Ubicaciones de Eventos</h3>
+        <div *ngIf="ipInfo" class="ip-info-box">
+          <app-map></app-map>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="news.length">
+  <h2>Noticias Principales</h2>
+  <div *ngFor="let article of news" class="news-article">
+    <h3>{{ article.title }}</h3>
+    <p>{{ article.description }}</p>
+    <a [href]="article.url" target="_blank">Leer más</a>
+  </div>
+</div>
+<div *ngIf="!news.length">
+  <p>Cargando noticias...</p>
+</div>
+<div *ngIf="!news.length">
+  <!-- Si no hay noticias, muestra un mensaje alternativo -->
+  <p>No hay noticias disponibles en este momento.</p>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2024 Universidad Tecnológica del Norte de Guanajuato. Todos los derechos reservados.</p>
+  </div>
+</footer>

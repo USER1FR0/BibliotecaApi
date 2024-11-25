@@ -1,0 +1,46 @@
+/* Estilo para el botón */
+.fb-login-btn {
+    background-color: #1877F2; /* Color de fondo de Facebook */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px; /* Hace que el botón sea redondeado */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  /* Estilo para el logo de Facebook */
+  .fb-icon {
+    width: 20px; /* Tamaño del logo */
+    height: 20px;
+    margin-right: 10px; /* Espacio entre el logo y el texto */
+  }
+  
+  /* Efecto de hover */
+  .fb-login-btn:hover {
+    background-color: #1558B0; /* Cambia el color cuando pasas el ratón por encima */
+  }
+  
+  button {
+    background-color: #4267B2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #365899;
+  }
+  
+  img {
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  
