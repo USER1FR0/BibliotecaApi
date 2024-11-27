@@ -23,10 +23,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const dbConfig = {
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'Biblioteca'
+  host: 'bymxdaf31douy5j8cbkl-mysql.services.clever-cloud.com',
+  user: 'ua6pm8lfvpmwbilm',
+  password: 'aPEPJS2XF4FED7fKzFEH',
+  database: 'bymxdaf31douy5j8cbkl'
 };
 
 const pool = mysql.createPool(dbConfig);
@@ -43,7 +43,7 @@ pool.getConnection((err, connection) => {
 
   // Inicia el servidor solo después de una conexión exitosa
   const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
+  app.listen(PORT, '0.0.0.0', () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
   });
 });

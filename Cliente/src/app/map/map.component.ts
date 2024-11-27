@@ -59,6 +59,9 @@ export class MapComponent implements OnInit {
 
           // Agregar un marcador rojo en la ubicación del usuario
           this.addUserMarker(this.userPosition);
+
+          // Dibujar un círculo para representar la ubicación aproximada
+          this.addUserAccuracyCircle(this.userPosition, position.coords.accuracy);
         },
         () => {
           alert("No pudimos obtener su ubicación.");
@@ -77,6 +80,18 @@ export class MapComponent implements OnInit {
     );
     this.userMarker = new H.map.Marker(position, { icon: userIcon });
     this.map.addObject(this.userMarker);
+  }
+
+  // Dibujar un círculo que represente la precisión de la ubicación del usuario
+  addUserAccuracyCircle(position: any, accuracy: number): void {
+    const circle = new H.map.Circle(position, accuracy, {
+      style: {
+        fillColor: 'rgba(0, 128, 255, 0.3)', // Azul con transparencia
+        strokeColor: 'rgba(0, 128, 255, 0.8)', // Azul para el borde
+        lineWidth: 2
+      }
+    });
+    this.map.addObject(circle);
   }
 
   // Cargar los eventos activos desde el servicio y agregar "cuadros de texto" como marcadores

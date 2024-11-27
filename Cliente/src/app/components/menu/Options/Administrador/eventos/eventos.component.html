@@ -1,7 +1,7 @@
 <div class="contenedor-centralizado">
   <div *ngIf="!isRegistroVisible && !isEventosVisible" class="opciones-acciones">
-    <button (click)="showRegistro()" class="accion-boton">Registrar Evento</button>
-    <button (click)="showEventos()" class="accion-boton">Ver Eventos</button>
+    <button (click)="showRegistro()" class="accion-boton">Registrar Biblioteca</button>
+    <button (click)="showEventos()" class="accion-boton">Ver Bibliotecas</button>
   </div>
 
   <div *ngIf="isRegistroVisible" class="registro-evento">
@@ -9,8 +9,8 @@
   
     <form (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="NombreEvento">Nombre del Evento</label>
-        <input type="text" id="NombreEvento" placeholder="Nombre del Evento" maxlength="50" [(ngModel)]="Evento.Nombre" name="Nombre" required>
+        <label for="NombreEvento">Nombre de la Biblioteca</label>
+        <input type="text" id="NombreEvento" placeholder="Nombre de la biblioteca" maxlength="50" [(ngModel)]="Evento.Nombre" name="Nombre" required>
       </div>
       <div class="form-group">
         <label for="Latitud">Latitud</label>
@@ -34,7 +34,7 @@
   </div>
 
   <div *ngIf="isEventosVisible" class="eventos-registrados">
-    <h1>Eventos Registrados</h1>
+    <h1>Bibliotecas Registradas</h1>
 
     <div class="barra-busqueda">
       <input type="text" [(ngModel)]="searchQuery" placeholder="Buscar por nombre, descripción o estatus" />
@@ -45,8 +45,8 @@
     <table *ngIf="!loading">
       <thead>
         <tr>
-          <th>Evento</th>
-          <th>Fecha</th>
+          <th>Biblioteca</th>
+          <th>Fecha Registro</th>
           <th>Descripción</th>
           <th>Estatus</th>
           <th>Acciones</th>
