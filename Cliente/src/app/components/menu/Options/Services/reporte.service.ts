@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PrestamoService {
-  private apiUrl = 'http://localhost:3000/Reporte';
+  private apiUrl = 'https://bibliotecaapi-f3gz.onrender.com/Reporte';
 
   constructor(private http: HttpClient) {}
 

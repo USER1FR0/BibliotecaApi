@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root'
 })
 export class LectorService {
-  private apiUrl = 'http://localhost:3000/lector'; 
+  private apiUrl = 'https://bibliotecaapi-f3gz.onrender.com/lector'; 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
 

@@ -24,7 +24,7 @@ export class RegistroLectorComponent {
 
   onSubmit() {
     if (this.lector.NombreCompleto && this.lector.NumeroControl && this.lector.Correo) {
-      this.http.post('http://localhost:3000/lector', this.lector).subscribe(
+      this.http.post('https://bibliotecaapi-f3gz.onrender.com/lector', this.lector).subscribe(
         (response: any) => {
           this.snackBar.open('Lector registrado exitosamente', 'Cerrar', {
 

@@ -31,7 +31,7 @@ export class DevolucionDeLibrosComponent implements OnInit {
 
   loadLoans() {
     this.loading = true;
-    this.http.get<any>('http://localhost:3000/loans')
+    this.http.get<any>('https://bibliotecaapi-f3gz.onrender.com/loans')
       .subscribe(
         (data) => {
           this.loans = data;
@@ -51,7 +51,7 @@ export class DevolucionDeLibrosComponent implements OnInit {
       const loanToRemove = this.loans[index];
       this.loans.splice(index, 1);
 
-      this.http.delete(`http://localhost:3000/returnBook/${loanId}`)
+      this.http.delete(`https://bibliotecaapi-f3gz.onrender.com/returnBook/${loanId}`)
         .subscribe(
           (response) => {
             this.snackBar.open('Libro devuelto exitosamente', 'Cerrar', { duration: 3000 });

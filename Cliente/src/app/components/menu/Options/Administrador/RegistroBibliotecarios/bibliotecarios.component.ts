@@ -30,7 +30,7 @@ export class RegistroBibiotecariosComponent {
             Contrasena: this.Contrasena
         };
 
-        this.http.post('http://localhost:3000/bibliotecarios', bibliotecarioData) // Realizar la solicitud POST
+        this.http.post('https://bibliotecaapi-f3gz.onrender.com/bibliotecarios', bibliotecarioData) // Realizar la solicitud POST
             .subscribe({
                 next: (response) => {
                     this.snackBar.open('Bibliotecario registrado exitosamente', 'Cerrar', {

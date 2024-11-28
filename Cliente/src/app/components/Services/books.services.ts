@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class BooksService {
 
-  private apiUrl = 'http://localhost:3000/api/books';  // URL de tu backend
+  private apiUrl = 'https://bibliotecaapi-f3gz.onrender.com/api/books';  // URL de tu backend
 
   constructor(private http: HttpClient) { }
 

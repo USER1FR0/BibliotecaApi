@@ -50,7 +50,7 @@ export class EventosComponent implements OnInit {
   onSubmit() {
     if (this.editMode) {
       // Actualizar evento existente
-      this.http.put(`http://localhost:3000/eventos/updateEvento/${this.editEventId}`, this.Evento).subscribe(
+      this.http.put(`https://bibliotecaapi-f3gz.onrender.com/eventos/updateEvento/${this.editEventId}`, this.Evento).subscribe(
         () => {
           this.snackBar.open('Evento actualizado exitosamente', 'Cerrar', { duration: 3000 });
           this.loadEvents();
@@ -63,7 +63,7 @@ export class EventosComponent implements OnInit {
     } else {
       // Crear un nuevo evento
       if (this.Evento.Nombre && this.Evento.Latitud && this.Evento.Longitud && this.Evento.Fecha && this.Evento.Descripcion) {
-        this.http.post('http://localhost:3000/eventos/createEvento', this.Evento).subscribe(
+        this.http.post('https://bibliotecaapi-f3gz.onrender.com/eventos/createEvento', this.Evento).subscribe(
           (response: any) => {
             this.snackBar.open('Evento registrado exitosamente', 'Cerrar', { duration: 3000 });
             this.loadEvents();
@@ -81,7 +81,7 @@ export class EventosComponent implements OnInit {
 
   loadEvents() {
     this.loading = true;
-    this.http.get<any>('http://localhost:3000/eventos/eventos')
+    this.http.get<any>('https://bibliotecaapi-f3gz.onrender.com/eventos/eventos')
       .subscribe(
         (data) => {
           this.Events = data;
@@ -118,7 +118,7 @@ export class EventosComponent implements OnInit {
   }
 
   eliminarEvento(id: number) {
-    this.http.delete(`http://localhost:3000/eventos/deleteEvento/${id}`)
+    this.http.delete(`https://bibliotecaapi-f3gz.onrender.com/eventos/deleteEvento/${id}`)
       .subscribe(
         () => {
           this.snackBar.open('Evento eliminado exitosamente', 'Cerrar', { duration: 3000 });

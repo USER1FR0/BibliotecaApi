@@ -365,7 +365,7 @@ app.post('/lector', (req, res) => {
       return res.status(500).send({ message: 'Error interno del servidor' });
     }
 
-    const confirmUrl = `http://localhost:3000/confirm/${token}`;
+    const confirmUrl = `https://bibliotecaapi-f3gz.onrender.com/confirm/${token}`;
 
 // Enviar correo de confirmación
 const mailOptions = {

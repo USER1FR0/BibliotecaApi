@@ -53,7 +53,7 @@ export class EditBooksComponent implements OnInit {
       formData.append('portada', this.selectedFile, this.selectedFile.name);
     }
 
-    this.http.put(`http://localhost:3000/updateBook/${this.book.ISBN}`, formData).subscribe(
+    this.http.put(`https://bibliotecaapi-f3gz.onrender.com/updateBook/${this.book.ISBN}`, formData).subscribe(
       (response) => {
         console.log('Libro actualizado con éxito', response);
         this.activeModal.close('save');
@@ -68,7 +68,7 @@ export class EditBooksComponent implements OnInit {
   deleteBook() {
     if (confirm('¿Estás seguro de que quieres eliminar este libro?')) {
       console.log('Eliminando libro con ISBN:', this.book.ISBN); // Agregar este log
-      this.http.delete(`http://localhost:3000/deleteBook/${this.book.ISBN}`).subscribe(
+      this.http.delete(`https://bibliotecaapi-f3gz.onrender.com/deleteBook/${this.book.ISBN}`).subscribe(
         (response) => {
           console.log('Libro eliminado con éxito', response);
           this.activeModal.close('delete');

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:3000'; // URL base de tu backend
+  private baseUrl = 'https://bibliotecaapi-f3gz.onrender.com'; // URL base de tu backend
 
   constructor(private http: HttpClient) {}
 

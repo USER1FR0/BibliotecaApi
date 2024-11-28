@@ -47,7 +47,7 @@ export class SearchBooksComponent implements OnInit {
   }
 
   cargarLectores() {
-    this.http.get<any>('http://localhost:3000/lector').subscribe(
+    this.http.get<any>('https://bibliotecaapi-f3gz.onrender.com/lector').subscribe(
       (data) => {
         this.lectores = data;
         this.filteredLectores = data; 
@@ -64,7 +64,7 @@ export class SearchBooksComponent implements OnInit {
   }
 
   cargarAutoresYEditoriales() {
-    this.http.get<any>('http://localhost:3000/api/libros/autores-editoriales').subscribe(
+    this.http.get<any>('https://bibliotecaapi-f3gz.onrender.com/api/libros/autores-editoriales').subscribe(
       (data) => {
         this.authors = data.autores;
         this.publishers = data.editoriales;
@@ -162,7 +162,7 @@ export class SearchBooksComponent implements OnInit {
         return;
     }
 
-    this.http.get(`http://localhost:3000/lector/${this.numeroControl}`).subscribe(
+    this.http.get(`https://bibliotecaapi-f3gz.onrender.com/lector/${this.numeroControl}`).subscribe(
         (lector: any) => {
             if (!lector.CorreoConfirmado) {
                 this.showEmailWarning = true;
@@ -178,7 +178,7 @@ export class SearchBooksComponent implements OnInit {
 
             console.log('Datos del préstamo a enviar:', loanData);
 
-            this.http.post('http://localhost:3000/loanBook', loanData).subscribe(
+            this.http.post('https://bibliotecaapi-f3gz.onrender.com/loanBook', loanData).subscribe(
                 (response: any) => {
                     this.snackBar.open(response.message, 'Cerrar', { duration: 3000 });
                     this.closeLoanForm();
@@ -188,7 +188,7 @@ export class SearchBooksComponent implements OnInit {
                         NumeroEjemplares: this.selectedBook.NumeroEjemplares - 1
                     };
 
-                    this.http.put(`http://localhost:3000/updateBook/quantity/${this.selectedBook.ISBN}`, updateData).subscribe(
+                    this.http.put(`https://bibliotecaapi-f3gz.onrender.com/updateBook/quantity/${this.selectedBook.ISBN}`, updateData).subscribe(
                         (updateResponse) => {
                             console.log('Cantidad de libros actualizada:', updateResponse);
                         },
