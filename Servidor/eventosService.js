@@ -3,11 +3,11 @@ const eventos = express.Router();
 const mysql = require('mysql2');
 
 const dbConfig = {
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'Biblioteca'
-  };
+  host: 'bymxdaf31douy5j8cbkl-mysql.services.clever-cloud.com',
+  user: 'ua6pm8lfvpmwbilm',
+  password: 'aPEPJS2XF4FED7fKzFEH',
+  database: 'bymxdaf31douy5j8cbkl'
+};
   
   const pool = mysql.createPool(dbConfig);
 
