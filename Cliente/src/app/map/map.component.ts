@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EventosService } from './../components/Services/eventos.service';
+import { environment } from '../components/home/enviroments/enviroment';
 
 declare var H: any;
 
@@ -8,42 +9,77 @@ declare var H: any;
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
   private map: any;
   private platform: any;
-  private userPosition: any; // Variable para almacenar la ubicación del usuario
-  private currentBubble: any; // Variable para almacenar el cuadro de información actual
-  private userMarker: any; // Variable para almacenar el marcador de la posición del usuario
+  private userPosition: any;
+  private currentBubble: any;
+  private userMarker: any;
+  private mapObjects: any[] = [];
 
   constructor(private eventosService: EventosService) {}
 
   ngOnInit(): void {
-    this.initMap();
+    // Asegurarse de que el SDK de HERE está cargado
+    if (typeof H !== 'undefined') {
+      this.initMap();
+    } else {
+      console.error('HERE Maps SDK no está cargado');
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Limpieza al destruir el componente
+    if (this.map) {
+      this.map.dispose();
+    }
+    this.mapObjects.forEach(obj => {
+      if (obj && typeof obj.dispose === 'function') {
+        obj.dispose();
+      }
+    });
   }
 
   initMap(): void {
-    this.platform = new H.service.Platform({
-      apikey: "EA1yweP2Qasi_jTOqeiKhRoBDqnu_Oh_QKiG91e2d38"
-    });
-    const defaultLayers = this.platform.createDefaultLayers();
+    try {
+      this.platform = new H.service.Platform({
+        apikey: environment.hereApiKey
+      });
+      
+      const defaultLayers = this.platform.createDefaultLayers();
 
-    this.map = new H.Map(
-      document.getElementById('mapContainer'),
-      defaultLayers.vector.normal.map,
-      {
-        zoom: 12,
+      // Crear el mapa solo si el contenedor existe
+      const mapContainer = document.getElementById('mapContainer');
+      if (!mapContainer) {
+        console.error('Contenedor del mapa no encontrado');
+        return;
       }
-    );
 
-    const mapEvents = new H.mapevents.MapEvents(this.map);
-    new H.mapevents.Behavior(mapEvents);
-    H.ui.UI.createDefault(this.map, defaultLayers, "es-ES");
+      this.map = new H.Map(
+        mapContainer,
+        defaultLayers.vector.normal.map,
+        {
+          zoom: 12,
+          pixelRatio: window.devicePixelRatio || 1
+        }
+      );
 
-    this.getBrowserPosition(); // Obtener la ubicación del usuario
-    this.loadEventos(); // Cargar los eventos y agregarlos al mapa
+      // Hacer el mapa interactivo
+      const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(this.map));
+      const ui = H.ui.UI.createDefault(this.map, defaultLayers, 'es-ES');
+      
+      // Adaptar el mapa al cambio de tamaño de la ventana
+      window.addEventListener('resize', () => {
+        this.map.getViewPort().resize();
+      });
+
+      this.getBrowserPosition();
+      this.loadEventos();
+    } catch (error) {
+      console.error('Error al inicializar el mapa:', error);
+    }
   }
 
-  // Obtener la posición del usuario y centrar el mapa en ella
   getBrowserPosition(): void {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -52,19 +88,21 @@ export class MapComponent implements OnInit {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
-          console.log("Ubicación del usuario:", this.userPosition);
-
-          // Centrar el mapa en la posición del usuario
-          this.map.setCenter(this.userPosition);
-
-          // Agregar un marcador rojo en la ubicación del usuario
-          this.addUserMarker(this.userPosition);
-
-          // Dibujar un círculo para representar la ubicación aproximada
-          this.addUserAccuracyCircle(this.userPosition, position.coords.accuracy);
+          
+          if (this.map) {
+            this.map.setCenter(this.userPosition);
+            this.addUserMarker(this.userPosition);
+            this.addUserAccuracyCircle(this.userPosition, position.coords.accuracy);
+          }
         },
-        () => {
+        (error) => {
+          console.error('Error de geolocalización:', error);
           alert("No pudimos obtener su ubicación.");
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
         }
       );
     } else {
@@ -72,32 +110,36 @@ export class MapComponent implements OnInit {
     }
   }
 
-  // Agregar un marcador rojo en la ubicación actual del usuario
   addUserMarker(position: any): void {
+    if (this.userMarker) {
+      this.map.removeObject(this.userMarker);
+    }
+
     const userIcon = new H.map.Icon(
       'https://upload.wikimedia.org/wikipedia/commons/e/e4/Red_dot.svg',
       { size: { w: 32, h: 32 } }
     );
+    
     this.userMarker = new H.map.Marker(position, { icon: userIcon });
     this.map.addObject(this.userMarker);
+    this.mapObjects.push(this.userMarker);
   }
 
-  // Dibujar un círculo que represente la precisión de la ubicación del usuario
   addUserAccuracyCircle(position: any, accuracy: number): void {
     const circle = new H.map.Circle(position, accuracy, {
       style: {
-        fillColor: 'rgba(0, 128, 255, 0.3)', // Azul con transparencia
-        strokeColor: 'rgba(0, 128, 255, 0.8)', // Azul para el borde
+        fillColor: 'rgba(0, 128, 255, 0.3)',
+        strokeColor: 'rgba(0, 128, 255, 0.8)',
         lineWidth: 2
       }
     });
     this.map.addObject(circle);
+    this.mapObjects.push(circle);
   }
 
-  // Cargar los eventos activos desde el servicio y agregar "cuadros de texto" como marcadores
   loadEventos(): void {
-    this.eventosService.getEventosActivos().subscribe(
-      (eventos) => {
+    this.eventosService.getEventosActivos().subscribe({
+      next: (eventos) => {
         eventos.forEach((evento) => {
           const coordinate = { 
             lat: parseFloat(evento.Latitud.toString()),
@@ -106,19 +148,21 @@ export class MapComponent implements OnInit {
           this.addTextMarker(coordinate, evento.NombreEvento, evento.Descripcion, this.formatDate(evento.Fecha));
         });
       },
-      (error) => {
+      error: (error) => {
         console.error("Error al cargar eventos:", error);
       }
-    );
+    });
   }
 
-  // Función para formatear la fecha en un formato legible
   formatDate(date: string): string {
     const eventDate = new Date(date);
-    return eventDate.toLocaleDateString("es-ES", { day: 'numeric', month: 'long', year: 'numeric' });
+    return eventDate.toLocaleDateString("es-ES", { 
+      day: 'numeric', 
+      month: 'long', 
+      year: 'numeric' 
+    });
   }
 
-  // Agregar un marcador de texto para cada evento
   addTextMarker(coordinate: any, title: string, description: string, formattedDate: string): void {
     const smallContent = `<b>${title}</b>`;
     const fullContent = `<b>${title}</b><br>${description}<br><i>Fecha: ${formattedDate}</i>`;
@@ -126,20 +170,19 @@ export class MapComponent implements OnInit {
     const marker = new H.map.DomMarker(coordinate, {
       icon: this.createTextIcon(smallContent)
     });
+    
     this.map.addObject(marker);
+    this.mapObjects.push(marker);
 
-    // Agregar evento para expandir al hacer clic
     marker.addEventListener('tap', () => {
-      marker.setIcon(this.createTextIcon(fullContent)); // Cambiar a la vista expandida
+      marker.setIcon(this.createTextIcon(fullContent));
     });
 
-    // Regresar al cuadro pequeño cuando el puntero se retira del cuadro
     marker.addEventListener('pointerleave', () => {
-      marker.setIcon(this.createTextIcon(smallContent)); // Cambiar de nuevo a la vista compacta
+      marker.setIcon(this.createTextIcon(smallContent));
     });
   }
 
-  // Crear un ícono de texto personalizado
   createTextIcon(content: string): any {
     const div = document.createElement('div');
     div.style.fontSize = '14px';
@@ -153,7 +196,6 @@ export class MapComponent implements OnInit {
     div.style.textAlign = 'center';
     div.innerHTML = content;
 
-    // Crear el ícono de texto
     return new H.map.DomIcon(div);
   }
 }
