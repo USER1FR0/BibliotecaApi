@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BookService {
-  private apiUrl = 'https://bibliotecaapi-f3gz.onrender.com';
+  private apiUrl = 'https://bibliotecaapi-f3gz.onrender.com/';
 
   constructor(private http: HttpClient) { }
 
