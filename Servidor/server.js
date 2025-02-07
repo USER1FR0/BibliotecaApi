@@ -15,7 +15,7 @@ const upload = multer({
   },
 });
 
-
+//Ya deberia jalar
 
 app.use(bodyParser.json());
 app.use(cors());
